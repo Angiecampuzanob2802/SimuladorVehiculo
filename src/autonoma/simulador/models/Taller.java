@@ -23,19 +23,12 @@ public class Taller {
             Vehiculo v = new Vehiculo(null, null);
 
             try {
-                    // Leemos el contenido del fichero
                     System.out.println("... Leemos el contenido del fichero ...");
                     s = new Scanner(fichero);
-                    //s.skip(Pattern.compile(" "));
-                    // Leemos linea a linea el fichero
+                    
                     while (s.hasNextLine()) {
-                        //String linea2 = s.next(); 	// Guardamos la linea en un String
-                        //System.out.println(linea2);      // Imprimimos la linea
-                        // Utilizamos Scanner para leer la línea
                         Scanner lineaScanner = new Scanner(s.nextLine());
-                        // Omitimos la primera palabra (llantas o motor)
                         lineaScanner.skip("\\w+\\s");
-                        // Leemos y almacenamos la segunda palabra (Bonitas o 3000)
                         String palabra = lineaScanner.next();
                         if(contador == 1){
                             l.setNombre(palabra);
@@ -43,7 +36,6 @@ public class Taller {
                              m.setCilindraje(palabra);
                         }
                         System.out.println(palabra);
-                        // Cerramos el Scanner de la línea
                         lineaScanner.close();
                         contador++;
                     }
@@ -55,13 +47,12 @@ public class Taller {
             } catch (FileNotFoundException ex) {
                     System.out.println("Mensaje: " + ex.getMessage());
             } finally {
-                    // Cerramos el fichero tanto si la lectura ha sido correcta o no
-                    try {
-                            if (s != null)
-                                    s.close();
-                    } catch (Exception ex2) {
-                            System.out.println("Mensaje 2: " + ex2.getMessage());
-                    }
+                try {
+                        if (s != null)
+                                s.close();
+                } catch (Exception ex2) {
+                        System.out.println("Mensaje 2: " + ex2.getMessage());
+                }
             }
         return null;
     }

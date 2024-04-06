@@ -452,7 +452,7 @@ public class VentanaPrincipal1 extends javax.swing.JFrame {
     private void btnFrenarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFrenarMouseClicked
         try {
             if(!this.simulador.getVehiculo().isPatinando()){
-                Integer intensidadFrenado = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingreses la intensidad de frenado"));
+                Integer intensidadFrenado = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese la intensidad de frenado"));
                 simulador.frenarVehiculo(intensidadFrenado);
                 reproducirSonido("acelerar.wav");
             }else{

@@ -11,10 +11,6 @@ import autonoma.simulador.models.Vehiculo;
 import autonoma.simulador.views.VentanaPrincipal1;
 import java.util.ArrayList;
 
-
-
-
-
 /**
  *
  * @author Angie Campuzano Betancur & Alejandra Zapata
@@ -25,7 +21,7 @@ public class Main {
         Simulador simulador=new Simulador();
         Vehiculo vehiculo = Taller.crearVehiculoDesdeArchivo();
         simulador.setVehiculo(vehiculo);
-        // inicilalizar motores
+    
         ArrayList<Motor> motores = new ArrayList<>();
         motores.add(new Motor("1000cc", 100));
         motores.add(new Motor("2000cc", 160));
@@ -39,10 +35,8 @@ public class Main {
         vehiculo.setValidarMotores(motores);
         vehiculo.getLlanta().setLlantas(llantas);
         
-        //valido la creacion de las variables en el taller y el retorno del objeto coche
         System.out.println("Soy el coche " + vehiculo.getLlanta().getNombre()+"\ncon "+vehiculo.getMotor().getCilindraje()+" de cilindraje");
                
-        // Fichero del que queremos leer
         VentanaPrincipal1 reproducir= new VentanaPrincipal1(simulador);
         reproducir.setVisible(true);
         
