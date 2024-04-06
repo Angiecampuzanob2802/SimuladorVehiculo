@@ -3,34 +3,72 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package autonoma.simulador.views;
+
+import autonoma.simulador.exceptions.ApagadoAccidental10Exception;
+import autonoma.simulador.exceptions.CapacidadMotor8Exception;
+import autonoma.simulador.exceptions.Frenar6Exception;
+import autonoma.simulador.exceptions.FrenoInnecesario4Exception;
+import autonoma.simulador.exceptions.Patinaje5Exception;
+import autonoma.simulador.exceptions.RecuperarPatinaje9Exception;
+import autonoma.simulador.exceptions.VehiculoApagado3Exception;
+import autonoma.simulador.exceptions.VehiculoYaApagado2Exception;
+import autonoma.simulador.exceptions.VehiculoYaEncendido1Exception;
+import autonoma.simulador.exceptions.VelocidadExcesiva7Exception;
+import autonoma.simulador.models.Simulador;
 import autonoma.simulador.models.Vehiculo;
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author dioge
+ * @author Angie Campuzano Betancur & Alejandra Zapata
  */
 public class VentanaPrincipal1 extends javax.swing.JFrame {
-    private Vehiculo vehiculo;
-    
-    
+
+    private Simulador simulador;
+    private Clip clip;
+
     /**
      * Creates new form VentanaPrincipal
      */
-    public VentanaPrincipal1(Vehiculo vehiculo) {
+    public VentanaPrincipal1(Simulador simulador) {
         initComponents();
-          this.setLocationRelativeTo(null);
-        try {
-            this.setIconImage(new ImageIcon(getClass().getResource("/autonona/tienda1/images/carro.png")).getImage());
-        }catch(Exception e){
-        }
-        this.vehiculo=vehiculo;
+        this.setLocationRelativeTo(null);
+        this.simulador = simulador;
     }
 
+    private void reproducirSonido(String ruta) {
+        try {
+            File archivoSonido = new File("C:\\Users\\dioge\\OneDrive\\Documentos\\NetBeansProjects\\Simulador\\src\\audios\\" + ruta);
+            AudioInputStream a = AudioSystem.getAudioInputStream(archivoSonido);
+            clip = AudioSystem.getClip();
+            clip.open(a);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.out.println("Error al reproducir sonido del archivo " + ruta);
+        }
+    }
+    
+    private void mostrarVariablesVehiculo() {
+        Vehiculo vehiculo = simulador.getVehiculo();
+        boolean motorEncendido = vehiculo.getMotor().isEncendido();
+        String texto = "Estado del motor: " + (motorEncendido ? " Encendido " : " Apagado");
+        texto = texto + " Velocidad: " + " " + (vehiculo.getVelocidad());
+        texto = texto + " Patinando: " + (vehiculo.isPatinando() ? " SI " : " NO ");
+        
+        Mostrar.setText(texto);
+    } 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,6 +96,7 @@ public class VentanaPrincipal1 extends javax.swing.JFrame {
         btnFrenar = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        Mostrar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,16 +129,16 @@ public class VentanaPrincipal1 extends javax.swing.JFrame {
         btnApagarLayout.setHorizontalGroup(
             btnApagarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnApagarLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(30, 30, 30)
                 .addGroup(btnApagarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         btnApagarLayout.setVerticalGroup(
             btnApagarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnApagarLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
@@ -123,27 +162,27 @@ public class VentanaPrincipal1 extends javax.swing.JFrame {
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autonoma/simulador/images/encender.png"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
-        jLabel2.setText(" Encender");
+        jLabel2.setText("Encender");
 
         javax.swing.GroupLayout btnEncenderLayout = new javax.swing.GroupLayout(btnEncender);
         btnEncender.setLayout(btnEncenderLayout);
         btnEncenderLayout.setHorizontalGroup(
             btnEncenderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnEncenderLayout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
-                .addGroup(btnEncenderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(34, 34, 34))
+                .addGap(30, 30, 30)
+                .addGroup(btnEncenderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
         );
         btnEncenderLayout.setVerticalGroup(
             btnEncenderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnEncenderLayout.createSequentialGroup()
-                .addGap(46, 46, 46)
+                .addGap(27, 27, 27)
                 .addComponent(jLabel7)
                 .addGap(6, 6, 6)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         btnAcelerar.setBackground(new java.awt.Color(204, 204, 204));
@@ -170,20 +209,20 @@ public class VentanaPrincipal1 extends javax.swing.JFrame {
         btnAcelerarLayout.setHorizontalGroup(
             btnAcelerarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnAcelerarLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(30, 30, 30)
                 .addGroup(btnAcelerarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         btnAcelerarLayout.setVerticalGroup(
             btnAcelerarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnAcelerarLayout.createSequentialGroup()
-                .addGap(46, 46, 46)
+                .addGap(26, 26, 26)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         btnFrenoMano.setBackground(new java.awt.Color(204, 204, 204));
@@ -210,20 +249,20 @@ public class VentanaPrincipal1 extends javax.swing.JFrame {
         btnFrenoManoLayout.setHorizontalGroup(
             btnFrenoManoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnFrenoManoLayout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addGroup(btnFrenoManoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         btnFrenoManoLayout.setVerticalGroup(
             btnFrenoManoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnFrenoManoLayout.createSequentialGroup()
-                .addGap(46, 46, 46)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel11)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         btnFrenar.setBackground(new java.awt.Color(204, 204, 204));
@@ -250,58 +289,66 @@ public class VentanaPrincipal1 extends javax.swing.JFrame {
         btnFrenarLayout.setHorizontalGroup(
             btnFrenarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnFrenarLayout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
-                .addGroup(btnFrenarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(btnFrenarLayout.createSequentialGroup()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnFrenarLayout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27))))
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addGroup(btnFrenarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30))
         );
         btnFrenarLayout.setVerticalGroup(
             btnFrenarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnFrenarLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(26, 26, 26)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
+
+        Mostrar.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout PanelVehiculoLayout = new javax.swing.GroupLayout(PanelVehiculo);
         PanelVehiculo.setLayout(PanelVehiculoLayout);
         PanelVehiculoLayout.setHorizontalGroup(
             PanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelVehiculoLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(PanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 788, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
+                .addGroup(PanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
                     .addGroup(PanelVehiculoLayout.createSequentialGroup()
                         .addComponent(btnEncender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59)
-                        .addComponent(btnApagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAcelerar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58)
-                        .addComponent(btnFrenar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59)
-                        .addComponent(btnFrenoMano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addGroup(PanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelVehiculoLayout.createSequentialGroup()
+                                .addGap(64, 64, 64)
+                                .addComponent(btnApagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(64, 64, 64)
+                                .addComponent(btnAcelerar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(64, 64, 64)
+                                .addComponent(btnFrenar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnFrenoMano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(PanelVehiculoLayout.createSequentialGroup()
+                                .addGap(127, 127, 127)
+                                .addComponent(Mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(51, 51, 51))
         );
         PanelVehiculoLayout.setVerticalGroup(
             PanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelVehiculoLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(PanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnFrenar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAcelerar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEncender, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnApagar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnFrenoMano, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(18, Short.MAX_VALUE))
+            .addGroup(PanelVehiculoLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnFrenar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAcelerar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnFrenoMano, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnApagar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnEncender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -330,92 +377,106 @@ public class VentanaPrincipal1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEncenderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEncenderMouseClicked
-       reproducirSonido("/audios/Encender.wav");
-    } 
-    private void reproducirSonido(String ruta) {
         try {
-            Clip clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(getClass().getResource(ruta)));
-            clip.start();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.println("ingrese");
+            simulador.encenderVehiculo();
+            reproducirSonido("Encender.wav");
+        } catch (VehiculoYaEncendido1Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } finally {
+            mostrarVariablesVehiculo();
         }
     }//GEN-LAST:event_btnEncenderMouseClicked
-    
+
+
     private void btnEncenderMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEncenderMouseEntered
-         this.mouseEntered(btnEncender);
+        this.mouseEntered(btnEncender);
     }//GEN-LAST:event_btnEncenderMouseEntered
 
     private void btnEncenderMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEncenderMouseExited
-         this.mouseExited(btnEncender);
+        this.mouseExited(btnEncender);
     }//GEN-LAST:event_btnEncenderMouseExited
 
     private void btnApagarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnApagarMouseClicked
-          reproducirSonido2("/audios/Apagar.wav");
-    } 
-    private void reproducirSonido2(String ruta) {
         try {
-            Clip clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(getClass().getResource(ruta)));
-            clip.start();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }                
+            simulador.apagarVehiculo(this.simulador.getVehiculo());
+            reproducirSonido("Apagar.wav");
+        } catch (VehiculoYaApagado2Exception | VelocidadExcesiva7Exception | ApagadoAccidental10Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } finally {
+            mostrarVariablesVehiculo();
+        }
     }//GEN-LAST:event_btnApagarMouseClicked
 
     private void btnApagarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnApagarMouseEntered
-         this.mouseEntered(btnApagar);
+        this.mouseEntered(btnApagar);
     }//GEN-LAST:event_btnApagarMouseEntered
 
     private void btnApagarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnApagarMouseExited
-         this.mouseExited(btnApagar);
+        this.mouseExited(btnApagar);
     }//GEN-LAST:event_btnApagarMouseExited
 
     private void btnAcelerarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcelerarMouseClicked
-          reproducirSonido3("/audios/Acelerar.wav");
-    } 
-    private void reproducirSonido3(String ruta) {
-        try {
-            Clip clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(getClass().getResource(ruta)));
-            clip.start();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }               
+        try{
+            if(!this.simulador.getVehiculo().isPatinando()){
+                Integer aceleracion = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese la  velocidad que requiera acelerar"));
+                simulador.acelerarVehiculo(aceleracion);
+                reproducirSonido("acelerar.wav");
+            }else{
+                JOptionPane.showMessageDialog(this, "El carro esta patinando, no puede acelerar");
+                stopPatinajeCarro();
+            }
+        } catch (VehiculoApagado3Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (RecuperarPatinaje9Exception | ApagadoAccidental10Exception | VehiculoYaApagado2Exception | CapacidadMotor8Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (InterruptedException ex) {
+            Logger.getLogger(VentanaPrincipal1.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            mostrarVariablesVehiculo();
+        }
+    }
+    public void stopPatinajeCarro() throws InterruptedException{
+        this.simulador.getVehiculo().llantaStopPatina();
+        JOptionPane.showMessageDialog(this, "El carro dejo de patinar, frene si es necesario");
     }//GEN-LAST:event_btnAcelerarMouseClicked
 
     private void btnAcelerarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcelerarMouseEntered
-         this.mouseEntered(btnAcelerar);
+        this.mouseEntered(btnAcelerar);
     }//GEN-LAST:event_btnAcelerarMouseEntered
 
     private void btnAcelerarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcelerarMouseExited
-         this.mouseExited(btnAcelerar);
+        this.mouseExited(btnAcelerar);
     }//GEN-LAST:event_btnAcelerarMouseExited
 
     private void btnFrenarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFrenarMouseClicked
-          reproducirSonido4("/audios/Frenar.wav");
-    } 
-    private void reproducirSonido4(String ruta) {
         try {
-            Clip clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(getClass().getResource(ruta)));
-            clip.start();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }               
+            if(!this.simulador.getVehiculo().isPatinando()){
+                Integer intensidadFrenado = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingreses la intensidad de frenado"));
+                simulador.frenarVehiculo(intensidadFrenado);
+                reproducirSonido("acelerar.wav");
+            }else{
+                JOptionPane.showMessageDialog(this, "El carro esta patinando, no puede frenar");
+            }  
+        } catch (Patinaje5Exception | VehiculoApagado3Exception | Frenar6Exception | FrenoInnecesario4Exception | RecuperarPatinaje9Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } finally {
+            mostrarVariablesVehiculo();
+        }
     }//GEN-LAST:event_btnFrenarMouseClicked
 
     private void btnFrenarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFrenarMouseEntered
-         this.mouseEntered(btnFrenar);
+        this.mouseEntered(btnFrenar);
     }//GEN-LAST:event_btnFrenarMouseEntered
 
     private void btnFrenarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFrenarMouseExited
-         this.mouseExited(btnFrenar);
+        this.mouseExited(btnFrenar);
     }//GEN-LAST:event_btnFrenarMouseExited
 
     private void btnFrenoManoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFrenoManoMouseClicked
-          reproducirSonido5("/audios/FrenoBrusco.wav");
-    } 
+        reproducirSonido5("/audios/FrenoBrusco.wav");
+    }
+
     private void reproducirSonido5(String ruta) {
         try {
             Clip clip = AudioSystem.getClip();
@@ -423,26 +484,26 @@ public class VentanaPrincipal1 extends javax.swing.JFrame {
             clip.start();
         } catch (Exception ex) {
             ex.printStackTrace();
-        }               
+        }
     }//GEN-LAST:event_btnFrenoManoMouseClicked
 
     private void btnFrenoManoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFrenoManoMouseEntered
-         this.mouseEntered(btnFrenoMano);
+        this.mouseEntered(btnFrenoMano);
     }//GEN-LAST:event_btnFrenoManoMouseEntered
 
     private void btnFrenoManoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFrenoManoMouseExited
-         this.mouseExited(btnFrenoMano);
+        this.mouseExited(btnFrenoMano);
     }//GEN-LAST:event_btnFrenoManoMouseExited
 
-       private void mouseEntered(JPanel panel){
-        panel.setBackground(new Color(216,248,208));
-    }
-    private void mouseExited(JPanel panel){
-         panel.setBackground(new Color(196,200,195));
+    private void mouseEntered(JPanel panel) {
+        panel.setBackground(new Color(216, 248, 208));
     }
 
-
+    private void mouseExited(JPanel panel) {
+        panel.setBackground(new Color(196, 200, 195));
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Mostrar;
     private javax.swing.JPanel PanelVehiculo;
     private javax.swing.JPanel btnAcelerar;
     private javax.swing.JPanel btnApagar;

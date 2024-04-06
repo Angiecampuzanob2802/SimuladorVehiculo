@@ -3,11 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/main/Simulador.java</file>
             <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/models/Motor.java</file>
-            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/views/VentanaPrincipal1.java</file>
-            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/models/Llanta.java</file>
+            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/main/Main.java</file>
+            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/models/Simulador.java</file>
+            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/exceptions/VelocidadExcesiva7Exception.java</file>
+            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/exceptions/Patinaje5Exception.java</file>
+            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/models/Taller.java</file>
+            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/exceptions/VehiculoApagado3Exception.java</file>
             <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/models/Vehiculo.java</file>
+            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/exceptions/VehiculoYaEncendido1Exception.java</file>
+            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/views/VentanaPrincipal1.java</file>
+            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/taller.txt</file>
+            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/exceptions/Frenar6Exception.java</file>
+            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/models/Llanta.java</file>
+            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/exceptions/RecuperarPatinaje9Exception.java</file>
+            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/exceptions/VehiculoYaApagado2Exception.java</file>
+            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/exceptions/CapacidadMotor8Exception.java</file>
+            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/exceptions/ApagadoAccidental10Exception.java</file>
+            <file>file:/C:/Users/dioge/OneDrive/Documentos/NetBeansProjects/Simulador/src/autonoma/simulador/exceptions/FrenoInnecesario4Exception.java</file>
         </group>
     </open-files>
 </project-private>
