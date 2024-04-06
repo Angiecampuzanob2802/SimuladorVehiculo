@@ -1,2 +1,2 @@
 llantas Bonitas
-motor 1000
+motor 1000cc

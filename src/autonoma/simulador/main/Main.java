@@ -10,7 +10,7 @@ import autonoma.simulador.models.Taller;
 import autonoma.simulador.models.Vehiculo;
 import autonoma.simulador.views.VentanaPrincipal1;
 import java.util.ArrayList;
-import java.util.Timer;
+
 
 
 
@@ -25,12 +25,11 @@ public class Main {
         Simulador simulador=new Simulador();
         Vehiculo vehiculo = Taller.crearVehiculoDesdeArchivo();
         simulador.setVehiculo(vehiculo);
-        Timer temporizador = new Timer();
         // inicilalizar motores
         ArrayList<Motor> motores = new ArrayList<>();
-        motores.add(new Motor("1000", 100));
-        motores.add(new Motor("2000", 160));
-        motores.add(new Motor("3000", 220));
+        motores.add(new Motor("1000cc", 100));
+        motores.add(new Motor("2000cc", 160));
+        motores.add(new Motor("3000cc", 220));
        
         ArrayList<Llanta> llantas = new ArrayList<>();
         llantas.add(new Llanta("Buenas",  110,0 ));
